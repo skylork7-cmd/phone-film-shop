@@ -1,0 +1,13 @@
+.App {
+  min-height: 100vh;
+}
+
+main h1 {
+  font-size: 24px;
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 0 12px;
+  }
+}
