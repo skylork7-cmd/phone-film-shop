@@ -9,6 +9,11 @@ export interface Product {
   imageUrl: string;
   compatibility: string[]; // e.g., ['iPhone 15', 'Galaxy S24']
   stock: number;
+  discountRate?: number;
+  discountedPrice?: number;
+  discountApplied?: string;
+  discountStartDate?: string;
+  discountEndDate?: string;
 }
 
 export interface CartItem {

@@ -58,7 +58,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [state, dispatch] = useReducer(cartReducer, { items: [] });
 
   const value = useMemo(() => {
-    const totalPrice = state.items.reduce((sum, ci) => sum + ci.product.price * ci.quantity, 0);
+    const totalPrice = state.items.reduce((sum, ci) => sum + (ci.product.discountedPrice || ci.product.price) * ci.quantity, 0);
     return {
       items: state.items,
       addItem: (product: Product, quantity?: number) =>
