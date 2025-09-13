@@ -54,3 +54,13 @@ export const adminAPI = {
   getUsers: () => apiCall('/admin/users'),
   testConnection: () => apiCall('/admin/test'),
 };
+
+export const scheduleAPI = {
+  listDiscount: () => apiCall('/api/schedules/discount'),
+  createDiscount: (cronExpr: string) => apiCall('/api/schedules/discount', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ cronExpr })
+  }),
+  deleteDiscount: (id: string) => apiCall(`/api/schedules/discount/${id}`, { method: 'DELETE' })
+};

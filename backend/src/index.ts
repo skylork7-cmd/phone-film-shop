@@ -3,9 +3,15 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 import productRoutes from './routes/productRoutes';
 import orderRoutes from './routes/orderRoutes';
 import adminRoutes from './routes/adminRoutes';
+import cron from 'node-cron';
+import { initProductSchedulers } from './scheduler/productScheduler';
+import scheduleRoutes from './routes/scheduleRoutes';
 
 // 환경 변수 로드
 dotenv.config();
@@ -38,6 +44,7 @@ app.get('/health', (req, res) => {
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/schedules', scheduleRoutes);
 
 // 404 핸들러
 app.use('*', (req, res) => {
@@ -58,6 +65,14 @@ app.listen(PORT, () => {
   console.log(`🚀 Backend server is running on port ${PORT}`);
   console.log(`📊 Health check: http://localhost:${PORT}/health`);
   console.log(`🔗 API base URL: http://localhost:${PORT}/api`);
+
+  // 스케줄러 초기화 예시: 매분마다 헬스 체크 로그
+  cron.schedule('* * * * *', () => {
+    console.log(`[CRON] Health ping @ ${new Date().toISOString()}`);
+  });
+
+  // 상품 관련 스케줄러 초기화
+  initProductSchedulers();
 });
 
 export default app;
